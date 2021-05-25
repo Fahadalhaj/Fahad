@@ -1,0 +1,90 @@
+class Question:
+     def __init__(self, prompt, answer):
+            self.prompt = prompt
+            self.answer = answer
+def geography_quiz():
+    question_prompts = []
+    f = open(r"C:\Users\hamma\Downloads\pythontasktalha\Quesgeography.txt", 'r')
+    question_prompts = f.readlines() #getting the questions
+    answers = {}
+    a_file = open(
+        r"C:\Users\hamma\Downloads\pythontasktalha\Ansgeography.txt", 'r')
+    for line in a_file:
+        key, value = line.strip('\n').split(":")
+        answers[key] = value
+    questions = []
+    answers_values = []
+    for i in question_prompts:
+        c = i[:2]
+        if c in answers:
+            answers_values.append(answers.get(c))
+    for index,value in enumerate(question_prompts):
+        questions.append(Question(value, answers_values[index]))
+    return questions
+def music_quiz():
+    question_prompts = []
+    f = open("Ques_music.txt",'r')
+    question_prompts = f.readlines() #getting the questions
+    answers = {}
+    a_file = open("Ans_music.txt")
+    for line in a_file:
+        key, value = line.strip('\n').split(":")
+        answers[key] = value
+    questions = []
+    answers_values = []
+    for i in question_prompts:
+        c = i[:2]
+        if c in answers:
+            answers_values.append(answers.get(c))
+    for index,value in enumerate(question_prompts):
+        questions.append(Question(value, answers_values[index]))
+    return questions
+def sport_quiz():
+    question_prompts = []
+    f = open("Ques_sports.txt",'r')
+    question_prompts = f.readlines() #getting the questions
+    answers = {}
+    a_file = open("Ans_sports.txt")
+    for line in a_file:
+        key, value = line.strip('\n').split(":")
+        answers[key] = value
+    questions = []
+    answers_values = []
+    for i in question_prompts:
+        c = i[:2]
+        if c in answers:
+            answers_values.append(answers.get(c))
+    for index,value in enumerate(question_prompts):
+        questions.append(Question(value, answers_values[index]))
+    return questions
+
+def run_quiz():
+    print('Remember you only have 10 attempts for invalid input .!')
+    score = 0
+    valid_input = ['a','b','c']
+    attempts = 0
+    option = input('Choose the quiz\n (1)Geography Quiz \n (2)Music Quiz\n (3)Sports Quiz\n')
+    option = int(option)
+    if option==1:
+        questions = geography_quiz()
+    elif option == 2:
+        questions = music_quiz()
+    elif option == 3:
+        questions = sport_quiz()
+    else:
+        print('Invalid input')
+    while attempts<10:
+        for question in questions:
+            answer = input(question.prompt)
+            answer = answer.lower()
+            if answer in valid_input:
+                if answer == question.answer:
+                    score += 1
+            else:
+                print('\nWrong input\n')
+                attempts +=1
+                print('Attempts No: ',attempts)
+        print('\n')
+        print("your Score", score, "out of", len(questions))
+        break;
+run_quiz()
